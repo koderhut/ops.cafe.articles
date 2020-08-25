@@ -1,0 +1,17 @@
+# This is a trigger to update the main site code when an article is merged
+name: CI
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run a multi-line script
+      run: |
+        curl -H "Accept: application/vnd.github.everest-preview+json" \
+            -H "Authorization: token ${{ secrets.SITE_REPO_AUTH }}" \
+            --request POST \
+            --data '{"event_type": "articles_update"}' \
+            ${{ secrets.SITE_REPO }}
